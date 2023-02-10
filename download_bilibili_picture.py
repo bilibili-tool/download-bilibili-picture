@@ -50,8 +50,9 @@ def get_dynamic_images(mid, next_offset=0, limit=20):
             filename = os.path.join('images', image_url.split('/')
                                     [-1])  # 构造图片文件名，以图片链接中的最后一段为名称
             download_image(image_url, filename)  # 下载图片
-            next_offset = next_offset + 1
-            get_dynamic_images(mid, next_offset, limit)
+            if next_offset:
+                next_offset = next_offset + 1
+                get_dynamic_images(mid, next_offset, limit)
 
 
 if __name__ == '__main__':
