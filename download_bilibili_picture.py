@@ -15,7 +15,6 @@ def download_image(url, name):
     :param name: 图片名称
     """
     try:
-
         response = requests.get(url, headers=headers)  # 发送 GET 请求，获取图片内容
         with open(name, 'wb') as f:  # 以二进制写入模式打开文件
             f.write(response.content)  # 写入图片内容
@@ -51,6 +50,8 @@ def get_dynamic_images(mid, next_offset=0):
                 image_url = picture.get('img_src')  # 获取图片链接
                 if not image_url:  # 如果图片链接不存在，
                     continue
+                if not os.path.exists('images'):  # 如果 images 文件夹不存在，创建
+                    os.makedirs('images')
                 filename = os.path.join('images', image_url.split(
                     '/')[-1])  # 构造图片文件名，以图片链接中的最后一段为名称
                 download_image(image_url, filename)  # 下载图片
@@ -62,6 +63,5 @@ def get_dynamic_images(mid, next_offset=0):
 
 if __name__ == '__main__':
     # mid = input('请输入up主的ID：')  # 输入 up 主的 ID
-    if not os.path.exists('images'):  # 如果 images 文件夹不存在，创建
-        os.makedirs('images')
     get_dynamic_images('13127564')  # 获取 up 主的动态图片
+    # get_dynamic_images('3493137785817215')  # 获取 up 主的动态图片
